@@ -134,3 +134,43 @@ ul li span{
 ul li span:hover{
     background: #edeef0;
 }
+
+jS
+const inputBox=document.getElementById("input-box");
+const listcontainer =document.getElementById("list-container");
+function addTask(){
+    if(inputBox.value===''){ 
+        alert("You must write something");
+}
+else{
+    let li=document.createElement("li"); //at htis we create one html element
+    li.innerHTML=inputBox.value; // whatever text we add in input feild is added to li
+    listcontainer.appendChild(li);// this line means this li is diplayed under list container
+    let span=document.createElement("span");
+    span.innerHTML="\u00d7";
+    li.appendChild(span);
+}
+inputBox.value="";
+savData();
+}
+
+listcontainer.addEventListener("click",function(e){
+    if(e.target.tagName==="li"){
+        e.target.classList.toggle("checked");
+        savData();
+    }
+    else if(e.target.tagName==="SPAN"){
+        e.target.parentElement.remove();
+        savData();
+    }
+},false);
+
+
+function savData(){
+    localStorage.setItem("data",listcontainer.innerHTML);
+}
+
+function showTask(){
+    listcontainer.innerHTML=localStorage.getItem("data");
+}
+showTask();
